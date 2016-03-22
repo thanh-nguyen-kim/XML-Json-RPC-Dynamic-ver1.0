@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Json RPC Client</title>
+<script type="text/javascript" src="JsScripts/jsonrpc.js"></script>
+<script type="text/javascript">
+	var rpcClient;
+
+	window.onload = function() {
+		rpcClient = new JSONRpcClient("/XML-Json_RPC_Dynamic_ver/JsonRPC");
+	};
+
+	function sum(inputFieldA, inputFieldB, tagResult) {
+		var a = parseFloat(document.getElementById(inputFieldA).value);
+		var b = parseFloat(document.getElementById(inputFieldB).value);
+		
+		if (isNaN(a) || isNaN(b)) {
+			a = 0;
+			b = 0;
+		}
+		
+		var callback = function(result, exception) {
+			if (exception) {
+				alert(exception.msg);
+			} else {
+				//document.write("complete");
+				document.getElementById(tagResult).innerHTML = result;
+			}
+		};
+		
+		rpcClient.CalcJson.sum(callback, a, b);
+	}
+</script>
+</head>
+<body>
+<body>
+	
+	<fieldset>
+		<legend>Simple JSON-RPC - Sum</legend>
+		Nhap A : <input type="text" id="a" name="a"><br /> Nhap B : <input
+			type="text" id="b" name="b"><br /> <input type="button"
+			value="Calculate" onclick='sum("a","b","myDiv3")'> <br />
+		<div id="mydiv2"></div>
+	</fieldset>
+	<fieldset>
+		<legend>Result returned from Server</legend>
+		<div id="myDiv3"></div>
+	</fieldset>
+</body>
+</html>
+
+</body>
+
+</html>
